@@ -113,9 +113,13 @@
                         return "I didn't understand that. Please type 'register' to start the registration process.";
                     }
                 case 1:
-                    userInfo.name = message;
-                    registrationStage++;
-                    return `Thanks, ${userInfo.name}. How old are you?`;
+                    if (message.length >= 3) {
+                        userInfo.name = message;
+                        registrationStage++;
+                        return `Thanks, ${userInfo.name}. How old are you?`;
+                    } else {
+                        return "Your name should be at least 3 characters long. Please enter your full name.";
+                    }
                 case 2:
                     userInfo.age = message;
                     registrationStage++;
@@ -125,21 +129,37 @@
                     registrationStage++;
                     return "Thanks. What is your address, including state and district?";
                 case 4:
-                    userInfo.address = message;
-                    registrationStage++;
-                    return "What is your phone number?";
+                    if (message.length >= 7) {
+                        userInfo.address = message;
+                        registrationStage++;
+                        return "What is your phone number?";
+                    } else {
+                        return "Your address should be at least 7 characters long. Please enter a valid address.";
+                    }
                 case 5:
-                    userInfo.phone = message;
-                    registrationStage++;
-                    return "What is your email address (optional)?";
+                    if (/^\d{10}$/.test(message)) {
+                        userInfo.phone = message;
+                        registrationStage++;
+                        return "What is your email address (optional)?";
+                    } else {
+                        return "Please enter a valid 10-digit phone number.";
+                    }
                 case 6:
-                    userInfo.email = message;
-                    registrationStage++;
-                    return "Please provide your Aadhaar Number.";
+                    if (message === "" || /\S+@\S+\.\S+/.test(message)) {
+                        userInfo.email = message;
+                        registrationStage++;
+                        return "Please provide your Aadhaar Number.";
+                    } else {
+                        return "Please enter a valid email address.";
+                    }
                 case 7:
-                    userInfo.aadhaar = message;
-                    registrationStage++;
-                    return "Do you have a PAN Number? If yes, please provide it.";
+                    if (/^\d{12}$/.test(message)) {
+                        userInfo.aadhaar = message;
+                        registrationStage++;
+                        return "Do you have a PAN Number? If yes, please provide it.";
+                    } else {
+                        return "Please enter a valid 12-digit Aadhaar Number.";
+                    }
                 case 8:
                     userInfo.pan = message;
                     registrationStage++;
